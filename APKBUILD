@@ -1,7 +1,7 @@
 # Contributor: Dan Hunsaker <danhunsaker@gmail.com>
 # Maintainer: Dan Hunsaker <danhunsaker@gmail.com>
 pkgname=narc
-pkgver=0.2.2
+pkgver=0.2.3
 pkgrel=0
 pkgdesc="Small client utility to watch log files and ship to syslog service, like logvac."
 url="https://github.com/mu-box/narc"
