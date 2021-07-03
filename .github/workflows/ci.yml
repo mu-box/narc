@@ -30,10 +30,7 @@ jobs:
           echo "${{ secrets.ABUILD_ARCHIVE }}" | \
           base64 -d | \
           /alpine/enter-chroot -u ${USER} tar xzv -C ~/
-      - run: |
-          cd apk
-          /alpine/enter-chroot -u ${USER} abuild -r -c -P /tmp/
-          cd ..
+      - run: /alpine/enter-chroot -u ${USER} abuild -r -c -P /tmp/
       - run: mv /alpine/tmp/narc/${{ matrix.arch }}/narc-*.apk narc-${{ matrix.arch }}.apk
       - run: /alpine/destroy --remove
       - uses: actions/upload-artifact@v2
