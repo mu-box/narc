@@ -1,0 +1,49 @@
+name: CI
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch:
+          - x86
+          - x86_64
+          - armhf
+          - armv7
+          - aarch64
+          - ppc64le
+          - s390x
+          - mips64
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          wget https://raw.githubusercontent.com/alpinelinux/alpine-chroot-install/v0.13.0/alpine-chroot-install \
+              && echo '444069f1a060b9f08b7e5ac264c8b9527b32fb54  alpine-chroot-install' | sha1sum -c \
+              || exit 1
+      - run: chmod +x alpine-chroot-install
+      - run: sudo ./alpine-chroot-install -a ${{ matrix.arch }} -i $(pwd)
+      - run: /alpine/enter-chroot apk add abuild
+      - run: /alpine/enter-chroot addgroup ${USER} abuild
+      - run: |
+          echo "${{ secrets.ABUILD_ARCHIVE }}" | \
+          base64 -d | \
+          /alpine/enter-chroot -u ${USER} tar xzv -C ~/
+      - run: |
+          cd apk
+          /alpine/enter-chroot -u ${USER} abuild -r -c -P /tmp/
+          cd ..
+      - run: mv /alpine/tmp/narc/${{ matrix.arch }}/narc-*.apk narc-${{ matrix.arch }}.apk
+      - run: /alpine/destroy --remove
+      - uses: actions/upload-artifact@v2
+        with:
+          name: narc-${{ matrix.arch }}.apk
+          path: narc-${{ matrix.arch }}.apk
+          retention-days: 5
+      - uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: narc-${{ matrix.arch }}.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
