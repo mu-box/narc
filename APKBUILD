@@ -28,6 +28,6 @@ check() {
 }
 
 package() {
-	install -D src/narcd "$pkgdir"/sbin/narcd
+	install -m 0755 -D src/narcd "$pkgdir"/sbin/narcd
     # install -D narc.conf "$pkgdir"/etc/narc/narc.conf
 }
