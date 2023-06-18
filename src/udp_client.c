@@ -1,27 +1,4 @@
 // -*- mode: c; tab-width: 8; indent-tabs-mode: 1; st-rulers: [70] -*-
-/*
- * CDDL HEADER START
- *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License (the "License").
- * You may not use this file except in compliance with the License.
- *
- * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
- * See the License for the specific language governing permissions
- * and limitations under the License.
- *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
- *
- * CDDL HEADER END
- */
-/*
- * Copyright 2013 Pagoda Box, Inc.  All rights reserved.
- */
 
 #include "narc.h"
 #include "udp_client.h"
@@ -52,7 +29,7 @@ handle_udp_read_alloc_buffer(uv_handle_t *handle, size_t len,  struct uv_buf_t *
 	buf->len = len;
 }
 
-// uv_buf_t 
+// uv_buf_t
 // handle_udp_read_alloc_buffer(uv_handle_t* handle, size_t size)
 // {
 // 	return uv_buf_init(malloc(size), size);
@@ -65,7 +42,7 @@ handle_udp_read(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf, const struct 
 		narc_log(NARC_WARNING, "dropping packet: %s", buf->base);
 
 	}else {
-		narc_log(NARC_WARNING, "Udp read error: %s", 
+		narc_log(NARC_WARNING, "Udp read error: %s",
 			uv_strerror(nread));
 	}
 	if (buf->base)
@@ -76,7 +53,7 @@ void
 handle_udp_send(uv_udp_send_t* req, int status)
 {
 	if (status != 0){
-		narc_log(NARC_WARNING, "Udp send error: %s", 
+		narc_log(NARC_WARNING, "Udp send error: %s",
 			uv_err_name(status));
 	}
 	uv_buf_t *buf = (uv_buf_t *)req->data;

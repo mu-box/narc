@@ -1,5 +1,5 @@
-[![narc logo](http://assets.microbox.rocks/readme-headers/narc.png)](http://microbox.cloud/open-source#narc)
- [![Build Status](https://travis-ci.org/mu-box/narc.svg)](https://travis-ci.org/mu-box/narc)
+[![narc logo](http://microbox.rocks/assets/readme-headers/narc.png)](http://microbox.cloud/open-source#narc)
+ [![Build Status](https://github.com/mu-box/narc/actions/workflows/ci.yaml/badge.svg)](https://github.com/mu-box/narc/actions)
 
 # narc
 
@@ -19,6 +19,6 @@ Contributions to the narc project are welcome and encouraged. Narc is a [Microbo
 
 ### Licence
 
-Mozilla Public License Version 2.0
+This project is released under [The MIT License](http://opensource.org/licenses/MIT).
 
-[![open source](http://assets.microbox.rocks/open-src/microbox-open-src.png)](http://microbox.cloud/open-source)
+[![open source](http://microbox.rocks/assets/open-src/microbox-open-src.png)](http://microbox.cloud/open-source)

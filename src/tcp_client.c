@@ -1,27 +1,4 @@
 // -*- mode: c; tab-width: 8; indent-tabs-mode: 1; st-rulers: [70] -*-
-/*
- * CDDL HEADER START
- *
- * The contents of this file are subject to the terms of the
- * Common Development and Distribution License (the "License").
- * You may not use this file except in compliance with the License.
- *
- * You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
- * or http://www.opensolaris.org/os/licensing.
- * See the License for the specific language governing permissions
- * and limitations under the License.
- *
- * When distributing Covered Code, include this CDDL HEADER in each
- * file and include the License file at usr/src/OPENSOLARIS.LICENSE.
- * If applicable, add the following below this CDDL HEADER, with the
- * fields enclosed by brackets "[]" replaced with your own identifying
- * information: Portions Copyright [yyyy] [name of copyright owner]
- *
- * CDDL HEADER END
- */
-/*
- * Copyright 2013 Pagoda Box, Inc.  All rights reserved.
- */
 
 #include "narc.h"
 #include "tcp_client.h"
@@ -37,8 +14,8 @@
 
 /*============================ Utility functions ============================ */
 
-void 
-free_tcp_write_req(uv_write_t *req) 
+void
+free_tcp_write_req(uv_write_t *req)
 {
 	sdsfree((char *)req->data);
 	free(req->bufs);
@@ -66,7 +43,7 @@ tcp_client_established(narc_tcp_client *client)
 
 /*=============================== Callbacks ================================= */
 
-void 
+void
 handle_tcp_connect(uv_connect_t* connection, int status)
 {
 	narc_tcp_client *client = server.client;
@@ -74,15 +51,15 @@ handle_tcp_connect(uv_connect_t* connection, int status)
 	if (status == -1) {
 		uv_close((uv_handle_t *)client->socket, (uv_close_cb)free);
 		client->socket = NULL;
-		narc_log(NARC_WARNING, "Error connecting to %s:%d (%d/%d)", 
-			server.host, 
+		narc_log(NARC_WARNING, "Error connecting to %s:%d (%d/%d)",
+			server.host,
 			server.port,
 			client->attempts,
 			server.max_connect_attempts);
 
 		if (client->attempts == server.max_connect_attempts) {
-			narc_log(NARC_WARNING, "Reached max connect attempts: %s:%d", 
-				server.host, 
+			narc_log(NARC_WARNING, "Reached max connect attempts: %s:%d",
+				server.host,
 				server.port);
 			exit(1);
 		} else
@@ -113,7 +90,7 @@ handle_tcp_read_alloc_buffer(uv_handle_t *handle, size_t len,  struct uv_buf_t *
 	buf->len = len;
 }
 
-// uv_buf_t 
+// uv_buf_t
 // handle_tcp_read_alloc_buffer(uv_handle_t* handle, size_t size)
 // {
 // 	return uv_buf_init(malloc(size), size);
@@ -128,10 +105,10 @@ handle_tcp_read(uv_stream_t* tcp, ssize_t nread, const struct uv_buf_t *buf)
 		narc_log(NARC_WARNING, "server responded unexpectedly: %s", buf->base);
 
 	else {
-		narc_log(NARC_WARNING, "Connection dropped: %s:%d, attempting to re-connect", 
+		narc_log(NARC_WARNING, "Connection dropped: %s:%d, attempting to re-connect",
 			server.host,
 			server.port);
-		
+
 		narc_tcp_client *client = (narc_tcp_client *)server.client;
 		uv_close((uv_handle_t *)client->socket, (uv_close_cb)free);
 		client->socket = NULL;

@@ -1,5 +1,5 @@
-# Contributor: Dan Hunsaker <danhunsaker@gmail.com>
-# Maintainer: Dan Hunsaker <danhunsaker@gmail.com>
+# Contributor: Hennik Hunsaker <hennikhunsaker@microbox.cloud>
+# Maintainer: Hennik Hunsaker <hennikhunsaker@microbox.cloud>
 pkgname=narc
 pkgver=0.2.3
 pkgrel=0
